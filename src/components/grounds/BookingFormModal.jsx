@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { fieldClass } from '../../utils/helpers'
 import { BOOKING_TYPES, todayKey, toInputTime } from '../../data/groundModel'
 import { allowedBookingTypes } from '../../utils/groundAccess'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 const EMPTY = {
   dateKey: todayKey(),
@@ -161,7 +162,9 @@ function BookingForm({ ground, grounds, matches, tournaments, role, onClose, onS
           <label className="block text-xs font-semibold tracking-wide text-slate-500 uppercase">
             Booking Type
             <select className={`mt-1.5 ${fieldClass}`} value={form.type} onChange={(event) => update('type', event.target.value)}>
-              {(types.length ? types : BOOKING_TYPES).map((item) => (
+              {(types.length ? types : BOOKING_TYPES)
+                .filter((item) => !TOURNAMENT_WIP || item !== 'Tournament')
+                .map((item) => (
                 <option key={item} value={item}>
                   {item}
                 </option>
@@ -179,6 +182,7 @@ function BookingForm({ ground, grounds, matches, tournaments, role, onClose, onS
               ))}
             </select>
           </label>
+          {TOURNAMENT_WIP ? null : (
           <label className="block text-xs font-semibold tracking-wide text-slate-500 uppercase">
             Related Tournament
             <select
@@ -194,6 +198,7 @@ function BookingForm({ ground, grounds, matches, tournaments, role, onClose, onS
               ))}
             </select>
           </label>
+          )}
           <label className="block text-xs font-semibold tracking-wide text-slate-500 uppercase">
             Notes
             <textarea

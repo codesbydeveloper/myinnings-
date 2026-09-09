@@ -26,6 +26,7 @@ import {
 } from '../../utils/groundAccess'
 import { getVisibleMatches } from '../../utils/matchAccess'
 import { useTeams } from '../../context/TeamContext'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 const TABS = [
   { id: 'overview', label: 'Overview' },
@@ -233,7 +234,7 @@ export default function GroundDetails() {
                   <li key={item.id} className="flex items-start justify-between gap-3 py-3 first:pt-0 last:pb-0">
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium text-slate-800">
-                        {item.matchTitle || item.tournamentName || item.type}
+                        {item.matchTitle || (!TOURNAMENT_WIP && item.tournamentName) || item.type}
                       </p>
                       <p className="text-xs text-slate-500">
                         {item.date} · {item.startTime} – {item.endTime}

@@ -12,7 +12,7 @@ import ReportsOverview from '../pages/reports/ReportsOverview'
 import MatchReports from '../pages/reports/MatchReports'
 import TeamReports from '../pages/reports/TeamReports'
 import PlayerReports from '../pages/reports/PlayerReports'
-import TournamentReports from '../pages/reports/TournamentReports'
+// import TournamentReports from '../pages/reports/TournamentReports'
 import FinanceReports from '../pages/reports/FinanceReports'
 import GroundReports from '../pages/reports/GroundReports'
 import ForgotPassword from '../pages/auth/ForgotPassword'
@@ -43,7 +43,7 @@ import EditTeam from '../pages/teams/EditTeam'
 import TeamDetails from '../pages/teams/TeamDetails'
 import Teams from '../pages/teams/Teams'
 import TournamentWorkInProgress from '../pages/tournaments/TournamentWorkInProgress'
-import Fixtures from '../pages/tournaments/Fixtures'
+// import Fixtures from '../pages/tournaments/Fixtures'
 // import Tournaments from '../pages/tournaments/Tournaments'
 // import CreateTournament from '../pages/tournaments/CreateTournament'
 // import EditTournament from '../pages/tournaments/EditTournament'
@@ -97,7 +97,8 @@ export default function AppRoutes() {
           <Route path="/tournaments/:tournamentId/edit" element={<EditTournament />} />
           <Route path="/tournaments/:tournamentId" element={<TournamentDetails />} />
           */}
-          <Route path="/fixtures" element={<Fixtures />} />
+          <Route path="/fixtures" element={<TournamentWorkInProgress />} />
+          {/* <Route path="/fixtures" element={<Fixtures />} /> */}
           <Route path="/availability" element={<Availability />} />
           <Route path="/grounds" element={<Grounds />} />
           <Route path="/grounds/new" element={<CreateGround />} />
@@ -125,7 +126,8 @@ export default function AppRoutes() {
             <Route path="matches" element={<MatchReports />} />
             <Route path="teams" element={<TeamReports />} />
             <Route path="players" element={<PlayerReports />} />
-            <Route path="tournaments" element={<TournamentReports />} />
+            <Route path="tournaments" element={<TournamentWorkInProgress />} />
+            {/* <Route path="tournaments" element={<TournamentReports />} /> */}
             <Route path="finance" element={<FinanceReports />} />
             <Route path="grounds" element={<GroundReports />} />
           </Route>

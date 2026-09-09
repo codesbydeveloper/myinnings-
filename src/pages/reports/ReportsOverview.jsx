@@ -6,7 +6,7 @@ import MatchTrendChart from '../../components/reports/MatchTrendChart'
 import { useReportData } from '../../hooks/useReportData'
 import { canAccessReport } from '../../utils/reportAccess'
 import { downloadCsv, money } from '../../utils/reportUtils'
-import { ROLES } from '../../utils/constants'
+import { ROLES, TOURNAMENT_WIP } from '../../utils/constants'
 
 export default function ReportsOverview() {
   const data = useReportData()
@@ -23,7 +23,9 @@ export default function ReportsOverview() {
     : [
         { label: 'Total Matches', value: data.overview.total, icon: 'matches' },
         { label: 'Completed Matches', value: data.overview.completed, icon: 'check' },
-        { label: 'Active Tournaments', value: data.tournamentOverview.active, icon: 'tournaments' },
+        ...(TOURNAMENT_WIP
+          ? []
+          : [{ label: 'Active Tournaments', value: data.tournamentOverview.active, icon: 'tournaments' }]),
         { label: 'Total Players', value: data.players.length, icon: 'players' },
         { label: 'Total Collected', value: money(data.finance.collected), icon: 'finance' },
         { label: 'Pending Payments', value: money(data.finance.pending + data.finance.overdue), icon: 'finance' },

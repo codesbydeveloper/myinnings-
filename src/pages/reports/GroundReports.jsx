@@ -8,6 +8,7 @@ import ReportStatCard from '../../components/reports/ReportStatCard'
 import ReportTable from '../../components/reports/ReportTable'
 import { useReportData } from '../../hooks/useReportData'
 import { bookingStatusCounts, downloadCsv, groundUsage } from '../../utils/reportUtils'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 export default function GroundReports() {
   const data = useReportData()
@@ -31,7 +32,7 @@ export default function GroundReports() {
       { label: 'Ground', value: (row) => row.groundName },
       { label: 'Bookings', value: (row) => row.bookings },
       { label: 'Match', value: (row) => row.match },
-      { label: 'Tournament', value: (row) => row.tournament },
+      ...(TOURNAMENT_WIP ? [] : [{ label: 'Tournament', value: (row) => row.tournament }]),
       { label: 'Practice', value: (row) => row.practice },
     ])
   }
@@ -74,7 +75,7 @@ export default function GroundReports() {
               { value: 'Tournament', label: 'Tournament' },
               { value: 'Practice', label: 'Practice' },
               { value: 'Other', label: 'Other' },
-            ],
+            ].filter((item) => !(TOURNAMENT_WIP && item.value === 'Tournament')),
           },
         ]}
       />
@@ -103,7 +104,7 @@ export default function GroundReports() {
             { id: 'groundName', label: 'Ground name' },
             { id: 'bookings', label: 'Number of bookings' },
             { id: 'match', label: 'Match bookings' },
-            { id: 'tournament', label: 'Tournament bookings' },
+            ...(TOURNAMENT_WIP ? [] : [{ id: 'tournament', label: 'Tournament bookings' }]),
             { id: 'practice', label: 'Practice bookings' },
           ]}
         />

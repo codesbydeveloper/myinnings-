@@ -4,6 +4,7 @@ import SectionCard from './SectionCard'
 import StatusBadge from './StatusBadge'
 import { useTournaments } from '../../context/TournamentContext'
 import { approvedRegistrations } from '../../data/tournamentModel'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 export default function AdminView({ data }) {
   const { tournaments } = useTournaments()
@@ -33,6 +34,7 @@ export default function AdminView({ data }) {
         </ul>
       </SectionCard>
 
+      {TOURNAMENT_WIP ? null : (
       <SectionCard
         title="Recent Tournaments"
         action={
@@ -60,6 +62,7 @@ export default function AdminView({ data }) {
           ))}
         </ul>
       </SectionCard>
+      )}
     </>
   )
 }

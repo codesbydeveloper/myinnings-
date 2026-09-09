@@ -1,3 +1,6 @@
+// Set to false (and uncomment tournament routes) to show the tournament module again.
+export const TOURNAMENT_WIP = true
+
 export const AUTH_STORAGE_KEYS = {
   session: 'myinnings.session',
   users: 'myinnings.users',
@@ -100,7 +103,7 @@ export const PAGE_META = {
   '/dashboard': {
     title: 'Dashboard',
     description:
-      'Overview of your cricket teams, matches, tournaments, and finances.',
+      'Overview of your cricket teams, matches, and finances.',
   },
   '/teams': {
     title: 'Teams',
@@ -128,7 +131,7 @@ export const PAGE_META = {
   },
   '/notifications': {
     title: 'Notifications',
-    description: 'Stay updated with your teams, matches, tournaments, and payments.',
+    description: 'Stay updated with your teams, matches, and payments.',
   },
   '/activity': {
     title: 'Activity',
@@ -140,7 +143,7 @@ export const PAGE_META = {
   },
   '/admin': {
     title: 'Admin Dashboard',
-    description: 'Manage users, teams, tournaments, and platform activities.',
+    description: 'Manage users, teams, and platform activities.',
   },
   '/settings': {
     title: 'Settings',

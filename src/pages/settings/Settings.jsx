@@ -52,7 +52,7 @@ export default function Settings() {
       <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
         <p className="text-sm font-semibold text-slate-800">Notifications</p>
         <p className="mt-1 text-sm text-slate-500">
-          Manage which alerts you receive for matches, tournaments, payments, and grounds.
+          Manage which alerts you receive for matches, payments, and grounds.
         </p>
         <Link
           to="/notifications/preferences"

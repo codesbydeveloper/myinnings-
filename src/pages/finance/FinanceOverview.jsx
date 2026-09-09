@@ -15,7 +15,7 @@ import { useTeams } from '../../context/TeamContext'
 import { useToast } from '../../context/ToastContext'
 import { useTournaments } from '../../context/TournamentContext'
 import { formatINR, simulateRequest } from '../../utils/helpers'
-import { ROLES } from '../../utils/constants'
+import { ROLES, TOURNAMENT_WIP } from '../../utils/constants'
 import {
   canCreatePayment,
   canRecordPayment,
@@ -114,7 +114,7 @@ export default function FinanceOverview() {
   return (
     <div className="space-y-5">
       <FinanceSummaryCards
-        variant={user?.role === ROLES.ORGANIZER ? 'tournament' : 'default'}
+        variant={user?.role === ROLES.ORGANIZER && !TOURNAMENT_WIP ? 'tournament' : 'default'}
         summary={summary}
       />
 
@@ -126,7 +126,7 @@ export default function FinanceOverview() {
         </div>
       ) : null}
 
-      {canViewTournamentFinance(user) ? (
+      {canViewTournamentFinance(user) && !TOURNAMENT_WIP ? (
         <SectionCard title="Tournament Financial Records">
           <div className="space-y-8">
             {tournaments.slice(0, 2).map((tournament) => (

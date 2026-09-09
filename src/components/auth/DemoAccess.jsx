@@ -5,8 +5,8 @@ import Icon from '../common/Icons'
 const ROLE_HINTS = {
   'Platform Admin': 'Full platform access, reports, and demo reset',
   'Team Manager': 'Teams, matches, squads, finance, and bookings',
-  'Team Captain': 'Team matches, squads, and tournament registration',
-  'Tournament Organizer': 'Tournaments, fixtures, approvals, and venues',
+  'Team Captain': 'Team matches, squads, and availability',
+  'Tournament Organizer': 'Venues, bookings, and club operations',
   Player: 'Availability, squad updates, and personal payments',
 }
 

@@ -8,7 +8,7 @@ export default function TournamentWorkInProgress() {
           Tournaments
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500 sm:text-base">
-          Discover and manage cricket tournaments.
+          This section is currently unavailable.
         </p>
       </section>
       <EmptyDashboardState

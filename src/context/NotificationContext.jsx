@@ -1,7 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { decorateNotification, SEED_NOTIFICATIONS } from '../data/notificationModel'
-import { AUTH_STORAGE_KEYS } from '../utils/constants'
+import { AUTH_STORAGE_KEYS, TOURNAMENT_WIP } from '../utils/constants'
+import { isTournamentNotification } from '../utils/tournamentWip'
 import { createId } from '../utils/helpers'
 import {
   DEFAULT_PREFERENCES,
@@ -107,6 +108,7 @@ export function NotificationProvider({ children }) {
     () =>
       notifications
         .filter((item) => item.userId === user?.id)
+        .filter((item) => !TOURNAMENT_WIP || !isTournamentNotification(item))
         .sort((left, right) => new Date(right.createdAt) - new Date(left.createdAt)),
     [notifications, user],
   )

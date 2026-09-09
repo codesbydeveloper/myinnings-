@@ -26,7 +26,8 @@ import { useFinance } from '../../context/FinanceContext'
 import { useGrounds } from '../../context/GroundContext'
 import { useTeams } from '../../context/TeamContext'
 import { getDashboardData, getRoleCopy } from '../../data/dashboardData'
-import { ROLES } from '../../utils/constants'
+import { ROLES, TOURNAMENT_WIP } from '../../utils/constants'
+import { withoutTournamentActions, withoutTournamentStats } from '../../utils/tournamentWip'
 import { formatLongDate, formatINR, getFirstName, simulateRequest } from '../../utils/helpers'
 import { canCreateMatch, getVisibleMatches } from '../../utils/matchAccess'
 import { findOwnPlayer, getVisiblePlayers } from '../../utils/playerAccess'
@@ -44,6 +45,7 @@ function getGreeting() {
 }
 
 function RoleExtras({ role, data }) {
+  if (TOURNAMENT_WIP && role === ROLES.ORGANIZER) return null
   if (role === ROLES.MANAGER) return <ManagerView data={data} />
   if (role === ROLES.ORGANIZER) return <OrganizerView />
   if (role === ROLES.PLAYER) return <PlayerView />
@@ -98,7 +100,7 @@ export default function Dashboard() {
     }
   }, [user?.id])
 
-  const stats = data.stats.map((stat) => {
+  const stats = withoutTournamentStats(data.stats.map((stat) => {
     if (role === ROLES.ORGANIZER && stat.id === 'approvals') {
       const pending = tournaments.flatMap((item) => pendingRegistrations(item)).length
       return { ...stat, value: String(pending) }
@@ -157,7 +159,7 @@ export default function Dashboard() {
       return { ...stat, value: String(completed), hint: tick ? 'Updated just now' : stat.hint }
     }
     return stat
-  })
+  })).filter((stat) => !(TOURNAMENT_WIP && role === ROLES.ORGANIZER && stat.id === 'teams'))
 
   async function handleRefresh() {
     setRefreshing(true)
@@ -241,7 +243,7 @@ export default function Dashboard() {
                     value: summary.pending > 0 ? 'Due' : 'Paid',
                   },
                 ]
-              : role === ROLES.ORGANIZER
+              : role === ROLES.ORGANIZER && !TOURNAMENT_WIP
                 ? [
                     { label: 'Tournament Income', value: formatINR(summary.collected) },
                     { label: 'Pending Fees', value: formatINR(summary.pending) },
@@ -257,10 +259,10 @@ export default function Dashboard() {
         }}
       />
       <QuickActions
-        actions={[
+        actions={withoutTournamentActions([
           ...(data.quickActions || []),
           { label: 'View Full Reports', to: '/reports', icon: 'reports' },
-        ]}
+        ])}
       />
     </div>
   )

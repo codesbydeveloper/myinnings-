@@ -12,6 +12,7 @@ import { useTournaments } from '../../context/TournamentContext'
 import { useFinance } from '../../context/FinanceContext'
 import { approvedRegistrations } from '../../data/tournamentModel'
 import { canViewTeamFinance } from '../../utils/financeAccess'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 export default function TeamOverview({ team, roster, upcomingMatches, user, showAvailability }) {
   const { matches } = useMatches()
@@ -81,6 +82,7 @@ export default function TeamOverview({ team, roster, upcomingMatches, user, show
         )}
       </SectionCard>
 
+      {TOURNAMENT_WIP ? null : (
       <SectionCard title="Tournaments">
         {participating.length ? (
           <ul className="space-y-2">
@@ -97,6 +99,7 @@ export default function TeamOverview({ team, roster, upcomingMatches, user, show
           <p className="text-sm text-slate-500">This team is not registered in a tournament yet.</p>
         )}
       </SectionCard>
+      )}
 
       {canViewTeamFinance(team, user) ? (
         <TeamFinanceSummary team={team} summary={getTeamSummary(team)} />

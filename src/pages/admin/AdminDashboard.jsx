@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import ResourcePage from '../../components/common/ResourcePage'
 import QuickActions from '../../components/dashboard/QuickActions'
+import { withoutTournamentActions } from '../../utils/tournamentWip'
 
 const LINKS = [
   { label: 'Users', to: '/users', copy: 'Review demo accounts and registered platform users.' },
@@ -13,12 +14,12 @@ export default function AdminDashboard() {
   return (
     <ResourcePage pathname="/admin">
       <QuickActions
-        actions={[
+        actions={withoutTournamentActions([
           { label: 'Manage Users', to: '/users', icon: 'user' },
           { label: 'Manage Teams', to: '/teams', icon: 'teams' },
           { label: 'View Reports', to: '/reports', icon: 'reports' },
           { label: 'Create Tournament', to: '/tournaments/new', icon: 'tournaments' },
-        ]}
+        ])}
       />
       <div className="grid gap-4 sm:grid-cols-2">
         {LINKS.map((item) => (

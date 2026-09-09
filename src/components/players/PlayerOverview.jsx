@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import SectionCard from '../dashboard/SectionCard'
 import { useTournaments } from '../../context/TournamentContext'
 import { approvedRegistrations } from '../../data/tournamentModel'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 export default function PlayerOverview({ player, showContact }) {
   const { tournaments } = useTournaments()
@@ -40,6 +41,7 @@ export default function PlayerOverview({ player, showContact }) {
         )}
       </SectionCard>
 
+      {TOURNAMENT_WIP ? null : (
       <SectionCard title="Tournaments" className="lg:col-span-2">
         {participating.length ? (
           <ul className="space-y-2">
@@ -59,6 +61,7 @@ export default function PlayerOverview({ player, showContact }) {
           <p className="text-sm text-slate-500">No tournament fixtures for this player team yet.</p>
         )}
       </SectionCard>
+      )}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { ROLES } from './constants'
+import { ROLES, TOURNAMENT_WIP } from './constants'
 import { isAdmin, isOrganizer, isPlayer } from './teamAccess'
 
 export function canViewGrounds() {
@@ -26,10 +26,15 @@ export function canCreateBooking(role) {
 }
 
 export function allowedBookingTypes(role) {
-  if (role === ROLES.ORGANIZER) return ['Tournament', 'Other']
-  if (role === ROLES.ADMIN) return ['Match', 'Tournament', 'Practice', 'Other']
-  if (role === ROLES.MANAGER || role === ROLES.CAPTAIN) return ['Match', 'Practice', 'Other']
-  return []
+  const types =
+    role === ROLES.ORGANIZER
+      ? ['Tournament', 'Other']
+      : role === ROLES.ADMIN
+        ? ['Match', 'Tournament', 'Practice', 'Other']
+        : role === ROLES.MANAGER || role === ROLES.CAPTAIN
+          ? ['Match', 'Practice', 'Other']
+          : []
+  return TOURNAMENT_WIP ? types.filter((item) => item !== 'Tournament') : types
 }
 
 export function canCancelBooking(booking, user) {

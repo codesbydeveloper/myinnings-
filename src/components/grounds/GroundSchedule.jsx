@@ -3,6 +3,7 @@ import EmptyDashboardState from '../dashboard/EmptyDashboardState'
 import StatusBadge from '../dashboard/StatusBadge'
 import { defaultSlots, todayKey } from '../../data/groundModel'
 import { formatDateKey } from '../../data/matchModel'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 function addDays(dateKey, days) {
   const date = new Date(`${dateKey}T00:00:00`)
@@ -78,7 +79,7 @@ export default function GroundSchedule({ ground, bookings = [] }) {
                     <p className="font-semibold text-slate-900">{slot.label}</p>
                     {booked ? (
                       <p className="mt-1 text-sm break-words text-slate-600">
-                        {booked.matchTitle || booked.tournamentName || booked.type}
+                        {booked.matchTitle || (!TOURNAMENT_WIP && booked.tournamentName) || booked.type}
                       </p>
                     ) : null}
                   </div>

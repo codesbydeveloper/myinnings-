@@ -1,7 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { decorateActivity, isActivityVisible, SEED_ACTIVITIES } from '../data/activityModel'
-import { AUTH_STORAGE_KEYS } from '../utils/constants'
+import { AUTH_STORAGE_KEYS, TOURNAMENT_WIP } from '../utils/constants'
+import { isTournamentActivity } from '../utils/tournamentWip'
 import { createId } from '../utils/helpers'
 import { emitActivity, onActivity } from '../utils/inbox'
 import { readJson, writeJson } from '../utils/storage'
@@ -68,6 +69,7 @@ export function ActivityProvider({ children }) {
     () =>
       activities
         .filter((item) => isActivityVisible(item, user, teams, players))
+        .filter((item) => !TOURNAMENT_WIP || !isTournamentActivity(item))
         .sort((left, right) => new Date(right.createdAt) - new Date(left.createdAt)),
     [activities, players, teams, user],
   )

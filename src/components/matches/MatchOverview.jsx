@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import SectionCard from '../dashboard/SectionCard'
 import StatusBadge from '../dashboard/StatusBadge'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 export default function MatchOverview({ match, canEdit, canCancel, onCancel, onStatus }) {
   return (
@@ -33,7 +34,7 @@ export default function MatchOverview({ match, canEdit, canCancel, onCancel, onS
             <Info label="Team" value={match.home} />
             <Info label="Opponent" value={match.away} />
             <Info label="Captain" value={match.captain || 'Unassigned'} />
-            <Info label="Source" value={match.source === 'tournament' ? 'Tournament' : 'Standalone'} />
+            <Info label="Source" value={TOURNAMENT_WIP ? 'Match' : match.source === 'tournament' ? 'Tournament' : 'Standalone'} />
           </dl>
         </SectionCard>
       </div>

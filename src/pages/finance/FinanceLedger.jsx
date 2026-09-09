@@ -10,7 +10,7 @@ import { useTeams } from '../../context/TeamContext'
 import { useTournaments } from '../../context/TournamentContext'
 import { ledgerSearchText, matchesDateFilter } from '../../data/financeModel'
 import { formatINR } from '../../utils/helpers'
-import { ROLES } from '../../utils/constants'
+import { ROLES, TOURNAMENT_WIP } from '../../utils/constants'
 import { LEDGER_TYPES, canViewFullLedger } from '../../utils/financeAccess'
 import { getVisibleMatches } from '../../utils/matchAccess'
 import { getVisibleTeams } from '../../utils/teamAccess'
@@ -95,7 +95,7 @@ export default function FinanceLedger() {
                 onChange={(event) => setFilters({ ...filters, type: event.target.value })}
               >
                 <option value="all">All</option>
-                {LEDGER_TYPES.map((item) => (
+                {LEDGER_TYPES.filter((item) => !TOURNAMENT_WIP || item !== 'Tournament Expense').map((item) => (
                   <option key={item} value={item}>
                     {item}
                   </option>
@@ -134,6 +134,7 @@ export default function FinanceLedger() {
                 ))}
               </select>
             </label>
+            {TOURNAMENT_WIP ? null : (
             <label className="block text-xs font-semibold tracking-wide text-slate-500 uppercase">
               Related Tournament
               <select
@@ -149,6 +150,7 @@ export default function FinanceLedger() {
                 ))}
               </select>
             </label>
+            )}
           </>
         }
       />

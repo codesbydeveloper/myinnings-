@@ -6,7 +6,7 @@ import { PLAYERS } from './players'
 import { TOURNAMENTS } from './tournaments'
 import { getTransactions } from './transactions'
 import { AVAILABILITY_REQUESTS, PLATFORM_USERS } from './users'
-import { ROLES } from '../utils/constants'
+import { ROLES, TOURNAMENT_WIP } from '../utils/constants'
 import { daysUntil } from '../utils/helpers'
 
 export { getNotificationCount } from './notifications'
@@ -22,6 +22,10 @@ export const ROLE_COPY = {
 }
 
 export function getRoleCopy(role) {
+  if (TOURNAMENT_WIP) {
+    if (role === ROLES.CAPTAIN) return 'Review your teams, match availability, and squads.'
+    if (role === ROLES.ORGANIZER) return 'Review venues, bookings, and related club activity.'
+  }
   return ROLE_COPY[role] ?? 'Welcome back to MyInnings.'
 }
 

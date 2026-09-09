@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { fieldClass } from '../../utils/helpers'
 import { EXPENSE_CATEGORIES } from '../../utils/financeAccess'
 import { todayKey } from '../../data/financeModel'
-import { ROLES } from '../../utils/constants'
+import { ROLES, TOURNAMENT_WIP } from '../../utils/constants'
 
 function emptyForm() {
   return {
@@ -83,7 +83,7 @@ function ExpenseForm({ expense, onClose, onSave, matches, tournaments, role }) {
       setError('Payment amount must be greater than zero.')
       return
     }
-    if (role === ROLES.ORGANIZER && !form.matchId && !form.tournamentId && !expense) {
+    if (role === ROLES.ORGANIZER && !TOURNAMENT_WIP && !form.matchId && !form.tournamentId && !expense) {
       setError('Select a match or tournament for this expense.')
       return
     }
@@ -175,6 +175,7 @@ function ExpenseForm({ expense, onClose, onSave, matches, tournaments, role }) {
               ))}
             </select>
           </label>
+          {TOURNAMENT_WIP ? null : (
           <label className="block text-xs font-semibold tracking-wide text-slate-500 uppercase">
             Related Tournament
             <select
@@ -191,6 +192,7 @@ function ExpenseForm({ expense, onClose, onSave, matches, tournaments, role }) {
               ))}
             </select>
           </label>
+          )}
           <label className="block text-xs font-semibold tracking-wide text-slate-500 uppercase">
             Notes
             <textarea

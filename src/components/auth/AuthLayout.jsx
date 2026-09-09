@@ -1,5 +1,6 @@
 import BrandMark from '../common/BrandMark'
 import Icon from '../common/Icons'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 const BENEFITS = [
   {
@@ -9,8 +10,10 @@ const BENEFITS = [
   },
   {
     icon: 'tournaments',
-    title: 'Matches and tournaments',
-    text: 'Plan fixtures, track results, and manage events.',
+    title: TOURNAMENT_WIP ? 'Matches and fixtures' : 'Matches and tournaments',
+    text: TOURNAMENT_WIP
+      ? 'Plan fixtures and track match results.'
+      : 'Plan fixtures, track results, and manage events.',
   },
   {
     icon: 'finance',

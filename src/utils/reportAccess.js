@@ -1,4 +1,4 @@
-import { ROLES } from './constants'
+import { ROLES, TOURNAMENT_WIP } from './constants'
 import { getVisibleMatches } from './matchAccess'
 import { getVisiblePlayers } from './playerAccess'
 import { getVisibleTeams, isAdmin, isOrganizer, isPlayer } from './teamAccess'
@@ -24,6 +24,7 @@ const SECTION_ROLES = {
 }
 
 export function canAccessReport(role, section = 'overview') {
+  if (TOURNAMENT_WIP && section === 'tournaments') return false
   return (SECTION_ROLES[section] || []).includes(role)
 }
 

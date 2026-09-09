@@ -10,6 +10,7 @@ import ReportTable from '../../components/reports/ReportTable'
 import StatusBadge from '../../components/dashboard/StatusBadge'
 import { useReportData } from '../../hooks/useReportData'
 import { downloadCsv, isDrawnMatch, matchWinner } from '../../utils/reportUtils'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 export default function MatchReports() {
   const data = useReportData()
@@ -91,7 +92,7 @@ export default function MatchReports() {
               ...data.allVisibleTournaments.map((item) => ({ value: item.id, label: item.name })),
             ],
           },
-        ]}
+        ].filter((item) => !(TOURNAMENT_WIP && item.id === 'tournament'))}
       />
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
         <ReportSection title="Match trend">

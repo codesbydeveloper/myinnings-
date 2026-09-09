@@ -9,6 +9,7 @@ import { useNotifications } from '../../context/NotificationContext'
 import { useToast } from '../../context/ToastContext'
 import { useTournaments } from '../../context/TournamentContext'
 import { matchesNotificationFilter, NOTIFICATION_FILTERS } from '../../data/notificationModel'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 export default function Notifications() {
   const { notifications, markRead, markAllRead, deleteNotification, unreadCount, clearRead } = useNotifications()
@@ -59,7 +60,7 @@ export default function Notifications() {
         <section>
           <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Notifications</h1>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500 sm:text-base">
-            Stay updated with your teams, matches, tournaments, and payments.
+            Stay updated with your teams, matches, and payments.
           </p>
         </section>
         <div className="flex flex-wrap gap-2">
@@ -95,7 +96,7 @@ export default function Notifications() {
 
       <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
         <div className="flex min-w-max gap-2">
-          {NOTIFICATION_FILTERS.map((item) => (
+          {(TOURNAMENT_WIP ? NOTIFICATION_FILTERS.filter((item) => item.id !== 'Tournament') : NOTIFICATION_FILTERS).map((item) => (
             <button
               key={item.id}
               type="button"

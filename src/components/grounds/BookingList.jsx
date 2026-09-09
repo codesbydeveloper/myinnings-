@@ -1,5 +1,6 @@
 import EmptyDashboardState from '../dashboard/EmptyDashboardState'
 import StatusBadge from '../dashboard/StatusBadge'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 export default function BookingList({
   bookings = [],
@@ -41,13 +42,13 @@ export default function BookingList({
                 </td>
                 <td className="px-4 py-3 text-slate-600">{item.type}</td>
                 <td className="max-w-[200px] px-4 py-3 text-slate-600">
-                  {item.tournamentName ? (
+                  {!TOURNAMENT_WIP && item.tournamentName ? (
                     <span className="block font-medium text-slate-800">{item.tournamentName}</span>
                   ) : null}
                   {item.matchTitle ? (
                     <span className="mt-0.5 block text-xs text-slate-500">{item.matchTitle}</span>
                   ) : null}
-                  {!item.tournamentName && !item.matchTitle ? '—' : null}
+                  {(!item.tournamentName || TOURNAMENT_WIP) && !item.matchTitle ? '—' : null}
                 </td>
                 <td className="px-4 py-3">
                   <StatusBadge status={item.status} />
@@ -81,7 +82,7 @@ export default function BookingList({
                 </p>
                 <p className="mt-1 text-xs break-words text-slate-500">
                   {item.type}
-                  {item.tournamentName ? ` · ${item.tournamentName}` : ''}
+                  {!TOURNAMENT_WIP && item.tournamentName ? ` · ${item.tournamentName}` : ''}
                   {item.matchTitle ? ` · ${item.matchTitle}` : ''}
                 </p>
               </div>

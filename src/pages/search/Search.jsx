@@ -8,6 +8,7 @@ import { getVisibleMatches } from '../../utils/matchAccess'
 import { getVisiblePlayers } from '../../utils/playerAccess'
 import { getVisibleTeams } from '../../utils/teamAccess'
 import { useAuth } from '../../context/AuthContext'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 function matchesQuery(fields, query) {
   return fields.filter(Boolean).some((field) => String(field).toLowerCase().includes(query))
@@ -37,7 +38,7 @@ export default function Search() {
         .filter((item) => matchesQuery([item.title, item.home, item.away, item.venue], query))
         .slice(0, 6)
     : []
-  const tournamentHits = query
+  const tournamentHits = query && !TOURNAMENT_WIP
     ? tournaments.filter((item) => matchesQuery([item.name, item.city, item.location], query)).slice(0, 6)
     : []
   const groundHits = query
@@ -51,7 +52,7 @@ export default function Search() {
       <section>
         <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Search</h1>
         <p className="mt-3 text-sm leading-6 text-slate-500 sm:text-base">
-          {query ? `Results for “${params.get('q')}”.` : 'Search teams, players, matches, tournaments, and grounds.'}
+          {query ? `Results for “${params.get('q')}”.` : 'Search teams, players, matches, and grounds.'}
         </p>
       </section>
 
@@ -77,7 +78,9 @@ export default function Search() {
             to={(item) => `/matches/${item.id}`}
             label={(item) => item.title || `${item.home} vs ${item.away}`}
           />
+          {TOURNAMENT_WIP ? null : (
           <Group title="Tournaments" items={tournamentHits} to={(item) => `/tournaments/${item.id}`} label={(item) => item.name} />
+          )}
           <Group title="Grounds" items={groundHits} to={(item) => `/grounds/${item.id}`} label={(item) => item.name} />
         </div>
       )}

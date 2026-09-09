@@ -2,6 +2,7 @@ import { useState } from 'react'
 import ActivityTimeline from '../../components/activity/ActivityTimeline'
 import { useActivity } from '../../context/ActivityContext'
 import { ACTIVITY_FILTERS, matchesActivityFilter } from '../../data/activityModel'
+import { TOURNAMENT_WIP } from '../../utils/constants'
 
 export default function Activity() {
   const { activities } = useActivity()
@@ -19,7 +20,7 @@ export default function Activity() {
 
       <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
         <div className="flex min-w-max gap-2">
-          {ACTIVITY_FILTERS.map((item) => (
+          {(TOURNAMENT_WIP ? ACTIVITY_FILTERS.filter((item) => item.id !== 'Tournaments') : ACTIVITY_FILTERS).map((item) => (
             <button
               key={item.id}
               type="button"

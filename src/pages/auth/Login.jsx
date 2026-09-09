@@ -68,7 +68,7 @@ export default function Login() {
           Welcome back
         </h1>
         <p className="mt-2 text-sm leading-6 text-slate-500">
-          Sign in with a demo role to explore teams, matches, tournaments, finance, and reports.
+          Sign in with a demo role to explore teams, matches, finance, and reports.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4" noValidate>

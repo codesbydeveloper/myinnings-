@@ -1,4 +1,5 @@
-import { ROLES } from './constants'
+import { ROLES, TOURNAMENT_WIP } from './constants'
+import { withoutTournamentNav } from './tournamentWip'
 
 const dashboard = { to: '/dashboard', label: 'Dashboard', icon: 'dashboard' }
 const settings = { to: '/settings', label: 'Settings', icon: 'settings' }
@@ -7,7 +8,9 @@ const activity = { to: '/activity', label: 'Activity', icon: 'activity' }
 const reports = { to: '/reports', label: 'Reports', icon: 'reports' }
 
 const PAGE_DESCRIPTIONS = {
-  '/dashboard': 'Overview of your cricket teams, matches, tournaments, and finances.',
+  '/dashboard': TOURNAMENT_WIP
+    ? 'Overview of your cricket teams, matches, and finances.'
+    : 'Overview of your cricket teams, matches, tournaments, and finances.',
   '/teams': 'Manage your cricket teams and team rosters.',
   '/teams/new': 'Add a new cricket team and start building the squad.',
   '/players': 'Manage cricket players, profiles, and team memberships.',
@@ -22,7 +25,9 @@ const PAGE_DESCRIPTIONS = {
   '/finance/payments': 'Review payment records, pending contributions, and payment status.',
   '/finance/expenses': 'Track match, team, and tournament expenses.',
   '/finance/ledger': 'View the chronological financial ledger and running balance.',
-  '/notifications': 'Stay updated with your teams, matches, tournaments, and payments.',
+  '/notifications': TOURNAMENT_WIP
+    ? 'Stay updated with your teams, matches, and payments.'
+    : 'Stay updated with your teams, matches, tournaments, and payments.',
   '/notifications/preferences': 'Choose which alerts you want to receive.',
   '/activity': 'Track recent activity across MyInnings.',
   '/admin': 'Manage users, teams, tournaments, and platform activities.',
@@ -49,11 +54,19 @@ function withNotifications() {
   }
 }
 
+function finishNav(nav) {
+  return {
+    ...nav,
+    main: withoutTournamentNav(nav.main),
+    admin: withoutTournamentNav(nav.admin),
+  }
+}
+
 export function getNavigation(role) {
   const notifications = withNotifications(role)
 
   if (role === ROLES.ORGANIZER) {
-    return {
+    return finishNav({
       main: [
         dashboard,
         { to: '/tournaments', label: 'Tournaments', icon: 'tournaments' },
@@ -69,11 +82,11 @@ export function getNavigation(role) {
         settings,
       ],
       admin: [],
-    }
+    })
   }
 
   if (role === ROLES.PLAYER) {
-    return {
+    return finishNav({
       main: [
         dashboard,
         { to: '/teams', label: 'My Team', icon: 'teams' },
@@ -89,11 +102,11 @@ export function getNavigation(role) {
         settings,
       ],
       admin: [],
-    }
+    })
   }
 
   if (role === ROLES.ADMIN) {
-    return {
+    return finishNav({
       main: [
         dashboard,
         { to: '/teams', label: 'Teams', icon: 'teams' },
@@ -105,16 +118,17 @@ export function getNavigation(role) {
         reports,
         notifications,
         activity,
+        settings,
       ],
       admin: [
         { to: '/admin', label: 'Admin Dashboard', icon: 'admin' },
         { to: '/users', label: 'User Management', icon: 'user' },
         settings,
       ],
-    }
+    })
   }
 
-  return {
+  return finishNav({
     main: [
       dashboard,
       { to: '/teams', label: 'My Teams', icon: 'teams' },
@@ -129,7 +143,7 @@ export function getNavigation(role) {
       settings,
     ],
     admin: [],
-  }
+  })
 }
 
 export function getPageMeta(pathname, role) {
@@ -225,7 +239,9 @@ export function getPageMeta(pathname, role) {
   if (pathname === '/search') {
     return {
       title: 'Search',
-      description: 'Find teams, players, matches, tournaments, and grounds.',
+      description: TOURNAMENT_WIP
+        ? 'Find teams, players, matches, and grounds.'
+        : 'Find teams, players, matches, tournaments, and grounds.',
     }
   }
 

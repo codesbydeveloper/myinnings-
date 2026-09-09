@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { fieldClass } from '../../utils/helpers'
 import { PAYMENT_TYPES } from '../../utils/financeAccess'
-import { ROLES } from '../../utils/constants'
+import { ROLES, TOURNAMENT_WIP } from '../../utils/constants'
 
 const EMPTY = {
   type: 'Match Contribution',
@@ -43,7 +43,7 @@ function CreatePaymentForm({ onClose, onSave, players, teams, matches, tournamen
   const organizer = role === ROLES.ORGANIZER
   const [form, setForm] = useState({
     ...EMPTY,
-    type: organizer ? 'Tournament Registration' : 'Match Contribution',
+    type: organizer && !TOURNAMENT_WIP ? 'Tournament Registration' : organizer ? 'Other' : 'Match Contribution',
   })
   const [error, setError] = useState('')
 
@@ -61,7 +61,10 @@ function CreatePaymentForm({ onClose, onSave, players, teams, matches, tournamen
   }, [onClose])
 
   const types = useMemo(
-    () => (organizer ? PAYMENT_TYPES.filter((item) => item !== 'Match Contribution') : PAYMENT_TYPES),
+    () => {
+      const list = organizer ? PAYMENT_TYPES.filter((item) => item !== 'Match Contribution') : PAYMENT_TYPES
+      return TOURNAMENT_WIP ? list.filter((item) => item !== 'Tournament Registration') : list
+    },
     [organizer],
   )
 
@@ -158,6 +161,7 @@ function CreatePaymentForm({ onClose, onSave, players, teams, matches, tournamen
             </select>
           </label>
 
+          {TOURNAMENT_WIP ? null : (
           <label className="block text-xs font-semibold tracking-wide text-slate-500 uppercase">
             Related Tournament
             <select
@@ -173,6 +177,7 @@ function CreatePaymentForm({ onClose, onSave, players, teams, matches, tournamen
               ))}
             </select>
           </label>
+          )}
 
           <label className="block text-xs font-semibold tracking-wide text-slate-500 uppercase">
             Description
