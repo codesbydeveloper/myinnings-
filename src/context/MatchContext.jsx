@@ -145,14 +145,18 @@ export function MatchProvider({ children }) {
     save([match, ...matches])
     emitNotification({
       title: 'New Match Created',
-      message: `${match.home} vs ${match.away} has been created.`,
+      message: `${match.home} vs ${match.away} has been created. Confirm your availability if you are in the squad.`,
       type: 'match-created',
       category: 'Match',
       relatedEntityType: 'match',
       relatedEntityId: match.id,
       route: `/matches/${match.id}`,
       teamIds: [match.homeTeamId, match.awayTeamId].filter(Boolean),
+      playerIds: players
+        .filter((player) => player.teamId === match.homeTeamId || player.teamId === match.awayTeamId)
+        .map((player) => player.id),
       staffRoles: ['captain', 'manager'],
+      includeRoster: true,
       includeAdmin: true,
       actorName: user.name,
     })
@@ -196,7 +200,11 @@ export function MatchProvider({ children }) {
         relatedEntityId: updated.id,
         route: `/matches/${updated.id}`,
         teamIds: [updated.homeTeamId, updated.awayTeamId].filter(Boolean),
+        playerIds: players
+          .filter((player) => player.teamId === updated.homeTeamId || player.teamId === updated.awayTeamId)
+          .map((player) => player.id),
         staffRoles: ['captain', 'manager'],
+        includeRoster: true,
         actorName: user.name,
       })
       emitActivity({
