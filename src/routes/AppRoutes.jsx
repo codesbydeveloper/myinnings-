@@ -42,11 +42,12 @@ import CreateTeam from '../pages/teams/CreateTeam'
 import EditTeam from '../pages/teams/EditTeam'
 import TeamDetails from '../pages/teams/TeamDetails'
 import Teams from '../pages/teams/Teams'
+import TournamentWorkInProgress from '../pages/tournaments/TournamentWorkInProgress'
 import Fixtures from '../pages/tournaments/Fixtures'
-import Tournaments from '../pages/tournaments/Tournaments'
-import CreateTournament from '../pages/tournaments/CreateTournament'
-import EditTournament from '../pages/tournaments/EditTournament'
-import TournamentDetails from '../pages/tournaments/TournamentDetails'
+// import Tournaments from '../pages/tournaments/Tournaments'
+// import CreateTournament from '../pages/tournaments/CreateTournament'
+// import EditTournament from '../pages/tournaments/EditTournament'
+// import TournamentDetails from '../pages/tournaments/TournamentDetails'
 import Grounds from '../pages/grounds/Grounds'
 import CreateGround from '../pages/grounds/CreateGround'
 import EditGround from '../pages/grounds/EditGround'
@@ -83,11 +84,19 @@ export default function AppRoutes() {
           <Route path="/matches/create" element={<CreateMatch />} />
           <Route path="/matches/:matchId/edit" element={<EditMatch />} />
           <Route path="/matches/:matchId" element={<MatchDetails />} />
+          {/* Temporarily hide tournament screens. Uncomment the original routes to restore. */}
+          <Route path="/tournaments" element={<TournamentWorkInProgress />} />
+          <Route path="/tournaments/new" element={<TournamentWorkInProgress />} />
+          <Route path="/tournaments/create" element={<TournamentWorkInProgress />} />
+          <Route path="/tournaments/:tournamentId/edit" element={<TournamentWorkInProgress />} />
+          <Route path="/tournaments/:tournamentId" element={<TournamentWorkInProgress />} />
+          {/*
           <Route path="/tournaments" element={<Tournaments />} />
           <Route path="/tournaments/new" element={<CreateTournament />} />
           <Route path="/tournaments/create" element={<CreateTournament />} />
           <Route path="/tournaments/:tournamentId/edit" element={<EditTournament />} />
           <Route path="/tournaments/:tournamentId" element={<TournamentDetails />} />
+          */}
           <Route path="/fixtures" element={<Fixtures />} />
           <Route path="/availability" element={<Availability />} />
           <Route path="/grounds" element={<Grounds />} />
